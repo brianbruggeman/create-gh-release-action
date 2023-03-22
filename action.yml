@@ -57,6 +57,8 @@ outputs:
     description:
       The version number extracted from the tag. The tag name is a concatenation of computed-prefix
       and version.
+
 runs:
-  using: node16
-  main: main.js
+  using: "composite"
+  steps:
+    - run: "${GITHUB_WORKSPACE}/main.sh"
