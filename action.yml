@@ -62,3 +62,4 @@ runs:
   using: "composite"
   steps:
     - run: "${GITHUB_WORKSPACE}/main.sh"
+      shell: bash
