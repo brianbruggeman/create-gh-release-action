@@ -46,20 +46,6 @@ tag="${ref#refs/tags/}"
 
 release_options=("${tag}")
 parse_changelog_options=()
-if [[ ! "${tag}" =~ ^${prefix}-?v?(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z\.-]+)?(\+[0-9A-Za-z\.-]+)?$ ]]; then
-    # TODO: In the next major version, reject underscores in pre-release strings and build metadata.
-    if [[ ! "${tag}" =~ ^${prefix}-?v?[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z_\.-]+)?(\+[0-9A-Za-z_\.-]+)?$ ]]; then
-        bail "invalid tag format '${tag}'"
-    fi
-    warn "underscores are not allowed in semver's pre-release strings and build metadata; this will be rejected in the next major version of create-gh-release-action: '${tag}'"
-    # parse-changelog 0.5+'s default version format strictly adheres to semver.
-    parse_changelog_options+=(--version-format '^\d+\.\d+\.\d+(-[\w\.-]+)?(\+[\w\.-]+)?$')
-fi
-# TODO: In the next major version, reject underscores in pre-release strings and build metadata.
-if [[ "${tag}" =~ ^${prefix}-?v?[0-9\.]+-[0-9A-Za-z_\.-]+(\+[0-9A-Za-z_\.-]+)?$ ]]; then
-    release_options+=("--prerelease")
-fi
-
 version="${tag}"
 # extract the portion of the tag matching the prefix pattern
 if [[ ! "${prefix}" = "" ]]; then
